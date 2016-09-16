@@ -20,8 +20,8 @@ MaterialDef Shape {
 
     Technique {
 
-        VertexShader GLSL100:   MatDefs/shapeVert.vert
-        FragmentShader GLSL100: MatDefs/shapeFrag.frag
+        VertexShader GLSL100:   Shaders/shapeVert.vert
+        FragmentShader GLSL100: Shaders/shapeFrag.frag
 
         WorldParameters {
             WorldViewProjectionMatrix
