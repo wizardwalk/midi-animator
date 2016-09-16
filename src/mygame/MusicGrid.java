@@ -73,8 +73,6 @@ public class MusicGrid extends Node {
         Material cursorMat = new Material(this.assetManager, "Materials/ShapeShader.j3md");
         cursorMat.setColor("BorderColor", cursorColor);
         cursorMat.setColor("Color", cursorColor);
-        cursorMat.setBoolean("GlowBorder", false);
-        cursorMat.setBoolean("GlowPane", false);
         cursorMat.setFloat("BorderSize", 0f);
         cursorMat.setFloat("Curve", 2f);
         cursorMat.setFloat("RadiusW", cursorSize/2f);

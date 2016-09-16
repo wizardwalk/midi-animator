@@ -54,8 +54,6 @@ public class MeasureControl extends Node {
         insertMeasureMat = new Material(this.assetManager, "Materials/ShapeShader.j3md");
         insertMeasureMat.setColor("Color", insertMeasureColor);        
         insertMeasureMat.setColor("BorderColor", insertMeasureColor);
-        insertMeasureMat.setBoolean("GlowBorder", false);
-        insertMeasureMat.setBoolean("GlowPane", false);
         insertMeasureMat.setFloat("BorderSize", 0);
         insertMeasureMat.setFloat("Curve", 2);
         insertMeasureMat.setFloat("RadiusW", 0.5f * insertMeasureHeight); // same as height?
@@ -73,8 +71,6 @@ public class MeasureControl extends Node {
         delMeasureMat = new Material(this.assetManager, "Materials/ShapeShader.j3md");
         delMeasureMat.setColor("Color", delMeasureColor);        
         delMeasureMat.setColor("BorderColor", delMeasureBorderColor);
-        delMeasureMat.setBoolean("GlowBorder", false);
-        delMeasureMat.setBoolean("GlowPane", false);
         delMeasureMat.setFloat("BorderSize", 0);
         delMeasureMat.setFloat("Curve", 2);
         delMeasureMat.setFloat("RadiusW", 0.5f * delMeasureHeight); // same as height?

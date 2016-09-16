@@ -70,8 +70,6 @@ public class TempoControl extends Node {
         myBorderColor.a = 1f;
         mat.setColor("BorderColor", myBorderColor);
         mat.setColor("Color", myColor);
-        mat.setBoolean("GlowBorder", false);
-        mat.setBoolean("GlowPane", false);
         mat.setFloat("BorderSize", borderSize);
         mat.setFloat("Curve", 3);
         mat.setFloat("RadiusW", controlSizeH/2f);

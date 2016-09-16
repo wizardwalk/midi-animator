@@ -64,8 +64,6 @@ public class Selector extends Node {
         borderColor.a = 0.5f;
         matSelected.setColor("BorderColor", borderColor);
         matSelected.setFloat("BorderSize", borderSize);
-        matSelected.setBoolean("GlowBorder", false);
-        matSelected.setBoolean("GlowPane", false);
         matSelected.setFloat("Curve", 2f);
         matSelected.setFloat("RadiusW", 1f);
         matSelected.setFloat("RadiusH", 1f);

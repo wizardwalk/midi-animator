@@ -86,8 +86,6 @@ public class Note extends Node implements Comparable<Note> {
         mat = new Material(this.assetManager, "Materials/ShapeShader.j3md");
         mat.setColor("BorderColor", myBorderColor);
         mat.setColor("Color", myColor);
-        mat.setBoolean("GlowBorder", false);
-        mat.setBoolean("GlowPane", false);
         mat.setFloat("BorderSize", borderSize);
         mat.setFloat("Curve", curve);
         mat.setFloat("RadiusW", radiusW * width);
