@@ -163,9 +163,7 @@ public class MusicGrid extends Node {
     
     // delete measures from our grid...
     public void deleteMeasures(int position, int measuresToDelete, Selector selector, List<Track> ourTracks) {
-        System.out.println("remove " + position);
         float posX = getPositionOnGrid(0, position+1, 0f).x;
-        System.out.println("posx = " + posX);
         float widthShift = measures.remove(position).getWholeNoteValue() * widthPerWholeNote;
         guiNode.detachChild(measureControls.get(position).getMeasureLabel());
         measureControls.remove(position);
@@ -176,16 +174,13 @@ public class MusicGrid extends Node {
                 measureControls.remove(position);
             }
         }
-        System.out.println("widthx = " + widthShift);
         
         List<Note> notesToDelete = new ArrayList<Note>();
         
         // shift our notes...
         for (int i = 0; i < ourTracks.size(); i++) {
-            System.out.println("notes in track = " + ourTracks.get(i).getNotes().size());
             for (int j = 0; j < ourTracks.get(i).getNotes().size(); j++) {
                 float notePosX = ourTracks.get(i).getNotes().get(j).getLocalTranslation().x - (ourTracks.get(i).getNotes().get(j).getWidth()/2f);
-                System.out.println("notePosX = " + notePosX);
                 if (notePosX >= posX) {
                     if (notePosX < posX+widthShift) {
                         // the note must sadly be deleted... forever :-(
@@ -195,9 +190,7 @@ public class MusicGrid extends Node {
                         if (selector.getSelectingNotes().contains(ourTracks.get(i).getNotes().get(j)))
                             selector.getSelectingNotes().remove(ourTracks.get(i).getNotes().get(j));
                         notesToDelete.add(ourTracks.get(i).getNotes().get(j));
-                        System.out.println("Delete " + j);
                     } else {
-                        System.out.println("Shift " + j);
                         Vector3f currentPos = ourTracks.get(i).getNotes().get(j).getLocalTranslation();
                         ourTracks.get(i).getNotes().get(j).setLocalTranslation(currentPos.x - widthShift, currentPos.y, currentPos.z);                        
                     }
