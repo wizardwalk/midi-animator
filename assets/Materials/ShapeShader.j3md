@@ -40,29 +40,4 @@ MaterialDef Shape {
             DepthWrite On
         }
     }
-
-    Technique Glow {
-
-        VertexShader GLSL100:   MatDefs/shapeVert.vert
-        FragmentShader GLSL100: MatDefs/shapeGlowFrag.frag
-
-        WorldParameters {
-            WorldViewProjectionMatrix
-        }
-
-        Defines {
-            HAS_COLOR : Color
-            HAS_CURVE : Curve
-            HAS_BORDER_COLOR : BorderColor
-            HAS_BORDER_SIZE : BorderSize
-            HAS_GLOWBORDER : GlowBorder
-            HAS_GLOWPANE : GlowPane
-        }
-
-        RenderState {
-            FaceCull Back
-            DepthTest On
-            DepthWrite On
-        }
-    }
 }
