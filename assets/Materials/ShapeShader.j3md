@@ -9,13 +9,6 @@ MaterialDef Shape {
         Float RadiusW
         Float RadiusH
         Color BorderColor
-        Boolean GlowBorder
-        Boolean GlowPane
-
-        // Texture of the glowing parts of the material
-        Texture2D GlowMap
-        // The glow color of the object
-        Color GlowColor
     }
 
     Technique {
