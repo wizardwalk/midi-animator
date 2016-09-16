@@ -1,8 +1,8 @@
 #midi-animator
 
-MIDI Animator was programmed by [Sean Patrick Hannifin](http://www.wizardwalk.com/) made with [jMonkeyEngine 3.0](http://www.jmonkeyengine.org). You will need jMonkeyEngine to use this code.
+MIDI Animator was programmed by [Sean Patrick Hannifin](http://www.wizardwalk.com/) using [jMonkeyEngine 3.0](http://www.jmonkeyengine.org). You will need jMonkeyEngine to use this code.
 
-The MIDI animator was created so that I could make custom visualizations of my music compositions for [my YouTube channel](http://www.youtube.com/wizardwalk). It is inspired by Stephen Malinowski's "Music Animation Machine".
+The MIDI animator was created so that I could make custom visualizations of my music compositions for [my YouTube channel](http://www.youtube.com/wizardwalk). It is inspired by Stephen Malinowski's "Music Animation Machine". For an example use case, see [here](https://www.youtube.com/watch?v=hNEt7KOGing). This MIDI visualizer was used ONLY to create the animation; titles were added and audio was synced separately in a 3rd party video editor.
 
 This MIDI animator is NOT intended to be a MIDI editor or MIDI player, only a MIDI visualizer.
 
