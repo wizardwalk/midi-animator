@@ -6,7 +6,9 @@ The MIDI animator was created so that I could make custom visualizations of my m
 
 This MIDI animator is NOT intended to be a MIDI editor or MIDI player, only a MIDI visualizer.
 
-To use: Download and start jMonkeyEngine and create a new project. Copy and paste these files and folders into the project directory, merging folders and overwriting files as necessary, and you should be set to go.
+##To use
+
+Download and start jMonkeyEngine and create a new project. Copy and paste these files and folders into the project directory, merging folders and overwriting files as necessary, and you should be set to go.
 
 ##Controls
 
@@ -27,3 +29,7 @@ To use: Download and start jMonkeyEngine and create a new project. Copy and past
 To change a track's color, hover mouse over a note, press ctrl and scroll mouse wheel.
 
 MIDI file is loaded from the midiFileName string.
+
+##Disclaimer
+
+I never actually intended to share this code, so it's rather sloppy.
