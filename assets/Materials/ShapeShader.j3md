@@ -9,6 +9,7 @@ MaterialDef Shape {
         Float RadiusW
         Float RadiusH
         Color BorderColor
+        Boolean Gradient
     }
 
     Technique {
@@ -25,6 +26,7 @@ MaterialDef Shape {
             HAS_CURVE : Curve
             HAS_BORDER_COLOR : BorderColor
             HAS_BORDER_SIZE : BorderSize
+            HAS_GRADIENT : Gradient
         }
 
         RenderState {
