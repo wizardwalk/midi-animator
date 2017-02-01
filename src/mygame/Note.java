@@ -43,13 +43,14 @@ public class Note extends Node implements Comparable<Note> {
     public boolean amPhantom = false; // am I a phantom note?
     private float playPosX; // the current position of the play bar
     
+    // style vars
     private NoteStyle myStyle;
-    
+    private boolean useGradient;
     
     // for copying a note, rather than copying a reference...
     public Note cloneNote() {
         Note newNote = new Note(assetManager, myTrack, height, width, curve, radiusH, radiusW, borderSize,
-                myColor.clone(), myBorderColor.clone(), isTrackNode, myStyle, midiChannel, midiProgram, velocityControl.getValue());
+                myColor.clone(), myBorderColor.clone(), isTrackNode, myStyle, midiChannel, midiProgram, velocityControl.getValue(), useGradient);
         newNote.setVelocity(velocityControl.getValue());
         newNote.setMute(isMuted);
         return newNote;
@@ -57,7 +58,7 @@ public class Note extends Node implements Comparable<Note> {
     
     // constructor
     public Note(AssetManager assetManager, Track myTrack, float height, float width, float curve, float radiusH, float radiusW, float borderSize,
-            ColorRGBA myColor, ColorRGBA myBorderColor, boolean isTrackNode, NoteStyle newStyle, int midiChannel, int midiProgram, int velocity) {        
+            ColorRGBA myColor, ColorRGBA myBorderColor, boolean isTrackNode, NoteStyle newStyle, int midiChannel, int midiProgram, int velocity, boolean useGradient) {        
         
         this.assetManager = assetManager;
         this.isTrackNode = isTrackNode;
@@ -73,6 +74,7 @@ public class Note extends Node implements Comparable<Note> {
         this.myBorderColor = myBorderColor;
         mySelectedBorderColor = ColorRGBA.LightGray;
         myStyle = newStyle;
+        this.useGradient = useGradient;
         this.midiChannel = midiChannel;
         this.midiProgram = midiProgram;
         
@@ -91,7 +93,8 @@ public class Note extends Node implements Comparable<Note> {
         mat.setFloat("RadiusW", radiusW * width);
         mat.setFloat("RadiusH", radiusH * height);
         mat.setFloat("Height", this.height);
-        mat.setFloat("Width", this.width);        
+        mat.setFloat("Width", this.width); 
+        mat.setBoolean("Gradient", useGradient);
         mat.getAdditionalRenderState().setBlendMode(RenderState.BlendMode.Alpha);
         geo.setMaterial(mat);        
         geo.setQueueBucket(RenderQueue.Bucket.Transparent);

@@ -1,7 +1,7 @@
 /**
  * MIDI Animator
  * programmed by Sean Patrick Hannifin
- * last updated 15 September 2016
+ * last updated 1 February 2017
  */
 
 package mygame;
@@ -41,7 +41,8 @@ public class Main extends SimpleApplication {
     ////// VARIABLES ////////////////////////////////////////////////////////////////
     
     private String midiFileName = "assets/MIDIFiles/Hannifin-AWinterWish.mid"; // the midi file to load
-    private float musicGridWidthPerWholeNote = 20f; // This will determine horizontal spacing / stretch
+    private float musicGridWidthPerWholeNote = 8f; // This will determine horizontal spacing / stretch
+    private boolean useGradients = true; // true or false
     
     private BitmapText controlText; // text for control decisions...
     
@@ -319,7 +320,7 @@ public class Main extends SimpleApplication {
                 newStyle = myNoteStyles.DIAMOND;
             if (i % 3 == 2)
                 newStyle = myNoteStyles.ROUNDEND;
-            Track newTrack = new Track(assetManager, midiSynth, 0, 0, musicGrid, trackColor, 0, newStyle);
+            Track newTrack = new Track(assetManager, midiSynth, 0, 0, musicGrid, trackColor, 0, newStyle, useGradients);
             
             // for loop to add all the notes in the given track...
             for (int j = 0; j < midiFile.getMyTracks().get(i).notes.size(); j++) {
@@ -651,10 +652,8 @@ public class Main extends SimpleApplication {
                 }
                 if (currentState == EditState.NORMAL) {
                     if (noteHovered != null && currentNoteEditState == NoteEditState.DRAG) {
-                        int toAdd = 10;
-                        if (altPressed)
-                            toAdd = 1;
-                        if (!ctrlPressed && shiftPressed) {
+                        int toAdd = 1;
+                        if (!ctrlPressed && shiftPressed && !altPressed) {
                             if (name.equals("scrollWheelUp"))
                                 noteHovered.getVelControlVar().add(toAdd);
                             else
@@ -663,7 +662,7 @@ public class Main extends SimpleApplication {
                             controlText.setText(Integer.toString(noteHovered.getVel()));
                             controlText.setLocalTranslation((cam.getWidth()/2f)-(controlText.getLineWidth()/2f), controlText.getLineHeight(), 0);
                         }
-                        if (ctrlPressed && shiftPressed) {
+                        if (ctrlPressed && shiftPressed && !altPressed) {
                             if (name.equals("scrollWheelUp"))
                                 noteHovered.getVelControlVar().add(toAdd);
                             else
@@ -672,7 +671,8 @@ public class Main extends SimpleApplication {
                             controlText.setText(Integer.toString(noteHovered.getVel()));
                             controlText.setLocalTranslation((cam.getWidth()/2f)-(controlText.getLineWidth()/2f), controlText.getLineHeight(), 0);
                         }
-                        if (ctrlPressed && !shiftPressed) {
+                        // if only ctrl is pressed, change track hue
+                        if (ctrlPressed && !shiftPressed && !altPressed) {
                             ColorRGBA currentColor = noteHovered.getTrack().getColor();
                             float[] newColorVals = Color.RGBtoHSB(Math.round(currentColor.r*255f), Math.round(currentColor.g*255f), Math.round(currentColor.b*255f), null);
                             float newHue = newColorVals[0];
@@ -685,9 +685,41 @@ public class Main extends SimpleApplication {
                                 if (newHue < 0f)
                                     newHue += 1f;
                             }
-                            Color myColor = Color.getHSBColor(newHue, 0.85f, 0.9f);
+                            Color myColor = Color.getHSBColor(newHue, newColorVals[1], newColorVals[2]);
                             ColorRGBA newColor = new ColorRGBA(myColor.getRed()/255f, myColor.getGreen()/255f, myColor.getBlue()/255f, myColor.getAlpha()/255f);
                             noteHovered.getTrack().updateMyColor(newColor);
+                        }
+                        // if ctrl and alt pressed, change track saturation with scroll wheel
+                        if (ctrlPressed && !shiftPressed && altPressed) {
+                            ColorRGBA currentColor = noteHovered.getTrack().getColor();
+                            float[] newColorVals = Color.RGBtoHSB(Math.round(currentColor.r*255f), Math.round(currentColor.g*255f), Math.round(currentColor.b*255f), null);
+                            float newSaturation = newColorVals[1];
+                            System.out.println("old saturation = " + newSaturation);
+                            if (name.equals("scrollWheelUp")) {
+                                newSaturation = Math.min(newSaturation+0.01f, 1f);
+                            } else {
+                                newSaturation = Math.max(newSaturation-0.01f, 0f);
+                            }
+                            System.out.println("new saturation = " + newSaturation);
+                            Color myColor = Color.getHSBColor(newColorVals[0], newSaturation, newColorVals[2]);
+                            ColorRGBA newColor = new ColorRGBA(myColor.getRed()/255f, myColor.getGreen()/255f, myColor.getBlue()/255f, myColor.getAlpha()/255f);
+                            noteHovered.getTrack().updateMyColor(newColor);                            
+                        }
+                        // if ctrl and alt and shift pressed, change track brightness with scroll wheel
+                        if (ctrlPressed && shiftPressed && altPressed) {
+                            ColorRGBA currentColor = noteHovered.getTrack().getColor();
+                            float[] newColorVals = Color.RGBtoHSB(Math.round(currentColor.r*255f), Math.round(currentColor.g*255f), Math.round(currentColor.b*255f), null);
+                            float newBrightness = newColorVals[2];
+                            System.out.println("old brightness = " + newBrightness);
+                            if (name.equals("scrollWheelUp")) {
+                                newBrightness = Math.min(newBrightness+0.01f, 1f);
+                            } else {
+                                newBrightness = Math.max(newBrightness-0.01f, 0f);
+                            }
+                            System.out.println("new saturation = " + newBrightness);
+                            Color myColor = Color.getHSBColor(newColorVals[0], newColorVals[1], newBrightness);
+                            ColorRGBA newColor = new ColorRGBA(myColor.getRed()/255f, myColor.getGreen()/255f, myColor.getBlue()/255f, myColor.getAlpha()/255f);
+                            noteHovered.getTrack().updateMyColor(newColor);                            
                         }
                     }
                     else if (tempoControlHovered != null) {

@@ -38,14 +38,17 @@ public class Track extends Node {
     
     // note style vars
     private NoteStyle myStyle;
+    private boolean useGradient;
     
-    public Track(AssetManager assetManager, MIDISynth midiSynth, int pluginNum, int midiChannel, MusicGrid grid, ColorRGBA myColor, int index, NoteStyle newStyle) {
+    public Track(AssetManager assetManager, MIDISynth midiSynth, int pluginNum, int midiChannel, MusicGrid grid, ColorRGBA myColor, 
+            int index, NoteStyle newStyle, boolean useGradient) {
         this.assetManager = assetManager;
         this.myColor = myColor;
         this.musicGrid = grid;
         this.midiSynth = midiSynth;
         this.pluginNum = pluginNum;
         this.midiChannel = midiChannel;
+        this.useGradient = useGradient;
         myIndex = index;
         myStyle = newStyle;
         
@@ -101,7 +104,7 @@ public class Track extends Node {
         ColorRGBA myBorderColor = myColor.mult(1.5f);
         myColor.a = 0.5f;
         newNote = new Note(assetManager, this, noteHeight, noteWidth, myStyle.curve, myStyle.curveHeight, curveWidth, myStyle.borderWidth,
-                myColor, myBorderColor, false, myStyle, midiChannel, midiProgram, velocity); 
+                myColor, myBorderColor, false, myStyle, midiChannel, midiProgram, velocity, useGradient); 
         // move the note into position... this assumes the grid's bottom left is at 0, 0
         newNote.setLocalTranslation((pos.x + (noteWidth/2)), pos.y, zLayer);
         // attach the note to this node
