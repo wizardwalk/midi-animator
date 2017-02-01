@@ -151,11 +151,11 @@ public class Track extends Node {
     /**
      * Turns off all notes
      */
-    public void stopAllNotes() {
+    public void stopAllNotes(boolean animateSize) {
         for (int i = 0; i < myNotes.size(); i++) {
             if (myNotes.get(i).isOn()) {
                 // turn it off...
-                myNotes.get(i).turnOff();
+                myNotes.get(i).turnOff(animateSize);
             }
         }
     }
@@ -168,25 +168,33 @@ public class Track extends Node {
      * Turns notes on and off based on the position of the playLine 
      * @param playPos The X position of the play line
      */
-    public void playNotes(float playPosX) {
+    public void playNotes(float playPosX, boolean animateSize) {
         // go through all our notes...
         // turn on notes that should be turned on
         // and turn off notes that should be turned off
         float endX = 0.0f; // cut off notes 0.01 before their actual end...?
+        float preplayDistance = 2f; // begin preplay animation before turning note on...
         for (int i = 0; i < myNotes.size(); i++) {
             myNotes.get(i).updatePlayPos(playPosX);
             float notePosX = myNotes.get(i).getLocalTranslation().x - (myNotes.get(i).getWidth()/2f);
-            if (notePosX <= playPosX && playPosX < (notePosX + myNotes.get(i).getWidth() - endX)) { // the note should be on
+            if (notePosX <= playPosX + preplayDistance && notePosX > playPosX) {
+                float distance = notePosX - playPosX;
+                float distancePercent = 1f - (distance / preplayDistance);
+                if (animateSize)
+                    myNotes.get(i).preplay(distancePercent);
+            } else if (notePosX <= playPosX && playPosX < (notePosX + myNotes.get(i).getWidth() - endX)) { // the note should be on
                 if (myNotes.get(i).isOff()) {
                     // turn it on!
-                    myNotes.get(i).turnOn(playPosX);
+                    myNotes.get(i).turnOn(playPosX, animateSize);
                     // send midi message, midi notes start at 21
                     int noteValue = getNoteMIDIValue(myNotes.get(i));
                     midiSynth.playMidiNote(myNotes.get(i).getMidiChannel(), myNotes.get(i).getMidiProgram(), noteValue, myNotes.get(i).getVel());
+                } else {
+                    myNotes.get(i).updateOn(playPosX, animateSize);
                 }
             } else if (myNotes.get(i).isOn()) { // the note should be off
                 // turn it off...
-                myNotes.get(i).turnOff();
+                myNotes.get(i).turnOff(animateSize);
                 // send midi message...
                 int noteValue = getNoteMIDIValue(myNotes.get(i));
                 midiSynth.stopMidiNote(myNotes.get(i).getMidiChannel(), noteValue);

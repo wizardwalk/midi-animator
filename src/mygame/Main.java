@@ -41,8 +41,9 @@ public class Main extends SimpleApplication {
     ////// VARIABLES ////////////////////////////////////////////////////////////////
     
     private String midiFileName = "assets/MIDIFiles/Hannifin-AWinterWish.mid"; // the midi file to load
-    private float musicGridWidthPerWholeNote = 8f; // This will determine horizontal spacing / stretch
-    private boolean useGradients = true; // true or false
+    private float musicGridWidthPerWholeNote = 25f; // This will determine horizontal spacing / stretch
+    private boolean useGradients = true; // use gradients on note colors? true or false
+    private boolean animateSize = true; // animated the note size when playing? true or false
     
     private BitmapText controlText; // text for control decisions...
     
@@ -611,7 +612,7 @@ public class Main extends SimpleApplication {
                         rootNode.detachChild(playGeo);
                         for (int i = 0; i < myTracks.size(); i++) {
                             myTracks.get(i).resetAllNotes(); // this will also stop all midi notes
-                            myTracks.get(i).stopAllNotes();
+                            myTracks.get(i).stopAllNotes(animateSize);
                         }
                     }
                 }
@@ -795,7 +796,7 @@ public class Main extends SimpleApplication {
             cam.setLocation(new Vector3f(playGeo.getLocalTranslation().x, cam.getLocation().y, cam.getLocation().z));
             // go through our tracks and update notes...
             for (int i = 0; i < myTracks.size(); i++) {
-                myTracks.get(i).playNotes(newXPos);
+                myTracks.get(i).playNotes(newXPos, animateSize);
             }
         }
         if (currentState == EditState.PLAYING_SCREENSHOT) {
@@ -818,7 +819,7 @@ public class Main extends SimpleApplication {
             cam.setLocation(new Vector3f(playGeo.getLocalTranslation().x, cam.getLocation().y, cam.getLocation().z));
             // go through our tracks and update notes...
             for (int i = 0; i < myTracks.size(); i++) {
-                myTracks.get(i).playNotes(newXPos);
+                myTracks.get(i).playNotes(newXPos, animateSize);
             }
         }
         else if (currentState == EditState.NORMAL) {            

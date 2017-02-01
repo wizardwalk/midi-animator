@@ -46,6 +46,7 @@ public class Note extends Node implements Comparable<Note> {
     // style vars
     private NoteStyle myStyle;
     private boolean useGradient;
+    private float startPosX = 0f;
     
     // for copying a note, rather than copying a reference...
     public Note cloneNote() {
@@ -267,7 +268,7 @@ public class Note extends Node implements Comparable<Note> {
         }
     }
     
-    // getters and setters
+    // getters and setters... and stuff...
     public void updatePlayPos(float playPosX) {
         if (amPhantom) {
             this.playPosX = playPosX;
@@ -306,14 +307,31 @@ public class Note extends Node implements Comparable<Note> {
     public boolean isOn() {
         return on;
     }
-    public void turnOn(float playPosX) {
+    public void preplay(float upcomingPercent) {
+        float newScaleY = 1f + upcomingPercent;
+        this.setLocalScale(1f, newScaleY, 1f);
+    }
+    public void turnOn(float playPosX, boolean animateSize) {
         on = true;
+        startPosX = playPosX;
         //setBorderSize(4f);
         hollow();
+        // resize?
+        if (animateSize)
+            this.setLocalScale(1f, 2f, 1f);
         createPhantomNote(playPosX);
     }
-    public void turnOff() {
+    // if note is already on, update based on playPosX
+    public void updateOn(float playPosX, boolean animateSize) {
+        float percentComplete = Math.max(((playPosX - startPosX) / getWidth()), 0f);
+        float newYScale = 2f - (1.25f * percentComplete);
+        if (animateSize)
+            this.setLocalScale(1f, newYScale, 1f);
+    }
+    public void turnOff(boolean animateSize) {
         on = false;
+        if (animateSize)
+            this.setLocalScale(1f, 0.75f, 1f);
         //resetColor();
         //resetBorder();
     }
@@ -323,6 +341,7 @@ public class Note extends Node implements Comparable<Note> {
         on = false;
         resetColor();
         resetBorder();
+        this.setLocalScale(1f);
         if (phantom != null) {
             if (hasChild(phantom))
                 detachChild(phantom);
