@@ -6,6 +6,7 @@ uniform float m_BorderSize;
 uniform float m_Curve;
 uniform float m_RadiusH;
 uniform float m_RadiusW;
+uniform bool m_Gradient;
 varying vec4 myPos;
 
 // pos = world position of pixel
@@ -74,6 +75,11 @@ if (calculate(myPos, halfW, halfH, radiusW, radiusH)) {
         } else {
         #endif
             color = vec4(1.0) * m_Color;
+            #ifdef HAS_GRADIENT
+            if (m_Gradient) {
+                color.rgb -= color.rgb * (myPos.y*0.5);
+            }
+            #endif
         #ifdef HAS_CURVE
         }
         #endif
