@@ -8,7 +8,9 @@ This MIDI animator is NOT intended to be a MIDI editor or MIDI player, only a MI
 
 ##To use
 
-Download and start jMonkeyEngine and create a new project. Copy and paste these files and folders into the project directory, merging folders and overwriting files as necessary, and you should be set to go.
+Download and start jMonkeyEngine and create a new project. Copy and paste these files and folders into the project directory, merging folders and overwriting files as necessary, and you should be set to go. Check out the YouTube video below for a quick walkthrough:
+
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/IcsnUmPj3dI/0.jpg)](https://www.youtube.com/watch?v=IcsnUmPj3dI)
 
 ##Controls
 
