@@ -34,4 +34,4 @@ MIDI file is loaded from the midiFileName string.
 
 ##Disclaimer
 
-I never actually intended to share this code, so it's rather sloppy.
+I never actually intended to share this code, so please forgive any weaknesses you may find!
